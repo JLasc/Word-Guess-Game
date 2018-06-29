@@ -20,8 +20,6 @@ var wrongLtrs = []; // used
 var choiceArr = []; // used
 var userLtrs = []; //used 
 
-
-
 //Word Banks - 23 words + Alphabet
 var wordBank = "avocado asparagus beans broccoli carrot celery cucumber garlic greenbean lettuce onion pepper peanut potato pumpkin radish salad spinach squash tomato yam zucchini";
 var alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -29,6 +27,9 @@ var alphabet = "abcdefghijklmnopqrstuvwxyz";
 //Splits word banks into new arrays
 var wordArray = wordBank.split(" ");
 var alphaArray = alphabet.split("");
+
+
+
 
 
 //keyShadow attempts to find x inside of y - returns boolean
@@ -45,6 +46,7 @@ function gameStart () {
         userLtrs.push(" _ ")
     }
     document.getElementById("compword").innerHTML = userLtrs.join("")
+    document.getElementById("score").innerHTML = score;
 }
 
 function lossCheck () {
@@ -55,6 +57,8 @@ function lossCheck () {
         document.getElementById("remguess").innerHTML = "You Lost!";
         document.getElementById("compword").innerHTML =  choice;
         document.getElementById("usedletter").innerHTML = wrongLtrs;
+        document.getElementById("score").innerHTML = score;
+
     }
 }
 
@@ -66,10 +70,11 @@ function winCheck() {
         wins++
         document.getElementById("remguess").innerHTML = "You won!"
         document.getElementById("usedletter").innerHTML = wrongLtrs;
+        document.getElementById("score").innerHTML = score;
+
+        
     }
 }
-
-
 
 
 // --------------------------------------------------------------------------------------------
@@ -85,8 +90,6 @@ document.onkeyup = function(event) {
     wrongltr = document.getElementById("usedletter");
     win = userLtrs.join("")
 
-   
- 
     if (gameOver) {
         guessesLeft = 13;
         userLtrs = [];
@@ -126,4 +129,11 @@ document.onkeyup = function(event) {
         lossCheck()
         winCheck()
     } 
+    
+//Scoreboard
+    score = 
+        "<p>Wins: " + wins +  "</p>" +
+        "<p>Losses: " + losses + "</p>"
+
+
 }; // This is the end of onkeyup
