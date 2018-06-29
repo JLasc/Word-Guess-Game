@@ -37,19 +37,39 @@ function indexOf (x, y) {
 }
 
 //Function that starts the game.
- function gameStart () {
+function gameStart () {
     compWord = document.getElementById("compword");
-
     choice = wordArray[Math.floor(Math.random() * wordArray.length)];
     choiceArr = choice.split("");
-
     for (i=0; i < choiceArr.length; i++) {
         userLtrs.push(" _ ")
     }
-
-        document.getElementById("compword").innerHTML = userLtrs.join("")
-        
+    document.getElementById("compword").innerHTML = userLtrs.join("")
 }
+
+function lossCheck () {
+    if (guessesLeft === 0) {
+        gameOver = true;
+        wrongLtrs = [];
+        losses++;
+        document.getElementById("remguess").innerHTML = "You Lost!";
+        document.getElementById("compword").innerHTML =  choice;
+        document.getElementById("usedletter").innerHTML = wrongLtrs;
+    }
+}
+
+function winCheck() {
+    check = indexOf(" _ ", userLtrs)
+    if (check !== true) {
+        wrongLtrs = [];
+        gameOver = true;
+        wins++
+        document.getElementById("remguess").innerHTML = "You won!"
+        document.getElementById("usedletter").innerHTML = wrongLtrs;
+    }
+}
+
+
 
 
 // --------------------------------------------------------------------------------------------
@@ -65,11 +85,13 @@ document.onkeyup = function(event) {
     wrongltr = document.getElementById("usedletter");
     win = userLtrs.join("")
 
-        // Win condition
+   
  
     if (gameOver) {
         guessesLeft = 13;
-        userLtrs = []
+        userLtrs = [];
+        
+
         //User presses 'space' to start the game.
         if (userGuess1 === 32) {
             gameStart();
@@ -82,10 +104,9 @@ document.onkeyup = function(event) {
     }
 
     if (gameOver !== true) {
-       
+
         if (correctGuess) {
             console.log("this is a correct guess")
-
             //Will replace underscore with correct letters
             for (i=0; i < choiceArr.length; i++){
                 if (userGuess === choiceArr[i]) {
@@ -93,34 +114,16 @@ document.onkeyup = function(event) {
                 compWord.innerHTML = userLtrs.join("")
                 }   
             } 
-            //If guess is not correct, and is an A-Z letter, store in wrongLtrs array
-            } else if ((userGuessInAlpha) && (correctGuess !== true) && (userGuess !== false)) {
-                wrongLtrs.push(userGuess)
-                wrongltr.innerHTML = wrongLtrs
-                console.log("this letter is wrong");
-                guessesLeft--;
-                remguess.innerHTML = "Guesses: " + guessesLeft;
-            }
-  
+        //If guess is not correct, and is an A-Z letter, store in wrongLtrs array
+        } else if ((userGuessInAlpha) && (correctGuess !== true) && (userGuess !== false)) {
+            wrongLtrs.push(userGuess)
+            wrongltr.innerHTML = wrongLtrs
+            console.log("this letter is wrong");
+            guessesLeft--;
+            remguess.innerHTML = "Guesses: " + guessesLeft;
+        } 
 
-            
-            
-
-            if (win === choice) {
-                remguess.innerHTML = "WINNER WINNER CHICKEN DINNER"
-             } else {
-                console.log()
-             }
-
-
-            
+        lossCheck()
+        winCheck()
     } 
-
-        // Wrong guesses decrement
-        
-
-
-
-
-
 }; // This is the end of onkeyup
