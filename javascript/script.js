@@ -28,7 +28,9 @@ var alphabet = "abcdefghijklmnopqrstuvwxyz";
 var wordArray = wordBank.split(" ");
 var alphaArray = alphabet.split("");
 
-
+var score = 
+"<p>Wins: " + wins +  "</p>" +
+"<p>Losses: " + losses + "</p>"
 
 
 
@@ -76,6 +78,13 @@ function winCheck() {
     }
 }
 
+function sameLetter() {
+    same = indexOf(userGuess, wrongLtrs)
+    if (same === true) {
+        userGuess
+    }
+}
+
 
 // --------------------------------------------------------------------------------------------
 //Key Up interactions
@@ -107,7 +116,6 @@ document.onkeyup = function(event) {
     }
 
     if (gameOver !== true) {
-
         if (correctGuess) {
             console.log("this is a correct guess")
             //Will replace underscore with correct letters
@@ -125,15 +133,13 @@ document.onkeyup = function(event) {
             guessesLeft--;
             remguess.innerHTML = "Guesses: " + guessesLeft;
         } 
-
         lossCheck()
         winCheck()
     } 
-    
+
+   
 //Scoreboard
-    score = 
-        "<p>Wins: " + wins +  "</p>" +
-        "<p>Losses: " + losses + "</p>"
+score
 
 
 }; // This is the end of onkeyup
