@@ -78,12 +78,6 @@ function winCheck() {
     }
 }
 
-function sameLetter() {
-    same = indexOf(userGuess, wrongLtrs)
-    if (same === true) {
-        userGuess
-    }
-}
 
 
 // --------------------------------------------------------------------------------------------
@@ -126,13 +120,13 @@ document.onkeyup = function(event) {
                 }   
             } 
         //If guess is not correct, and is an A-Z letter, store in wrongLtrs array
-        } else if ((userGuessInAlpha) && (correctGuess !== true) && (userGuess !== false)) {
+        } else if ((userGuessInAlpha) && (correctGuess !== true) && (userGuess !== false) && (indexOf(userGuess, wrongLtrs) === false))  {
             wrongLtrs.push(userGuess)
             wrongltr.innerHTML = wrongLtrs
             console.log("this letter is wrong");
             guessesLeft--;
             remguess.innerHTML = "Guesses: " + guessesLeft;
-        } 
+        }
         lossCheck()
         winCheck()
     } 
