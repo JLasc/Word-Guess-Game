@@ -1,7 +1,9 @@
 // Add a function that checks the winning condition 
 // Limit wrong guesses and decrement
 // link remaining guesses to #remguess
-// Add images? 
+// Add images - shorten word bank
+// Music 
+// 
 
 
 //Globals
@@ -20,8 +22,8 @@ var userLtrs = []; //used
 
 
 
-//Word Banks - 169 words + Alphabet
-var wordBank = "avocado, asparagus, beans, broccoli, carrot, celery, cucumber, garlic, greenbean, lettuce, onion, pepper, peanut, potato, pumpkin, radish, salad, spinach, squash, tomato, yam, zucchini";
+//Word Banks - 23 words + Alphabet
+var wordBank = "avocado asparagus beans broccoli carrot celery cucumber garlic greenbean lettuce  onion pepper peanut potato pumpkin radish salad spinach squash tomato yam zucchini";
 var alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 //Splits word banks into new arrays
@@ -49,6 +51,8 @@ function keyShadow (x, y) {
 }
 
 
+
+
 // Win check function
 
 
@@ -61,16 +65,21 @@ document.onkeyup = function(event) {
     compWord = document.getElementById("compword");
     shadow = keyShadow(userGuess, alphaArray);
     correctGuess = keyShadow(userGuess, choiceArr);
+    remguess = document.getElementById("remguess");
+
+    
 
     if (gameOver) {
+        guessesLeft = 13;
+        userLtrs = []
         //User presses 'space' to start the game.
         if (userGuess1 === 32) {
             gameStart();
             gameOver = false;
-            remWord.innerHTML = "Guesses Left: " + guessesLeft;
+            document.getElementById("remguess").innerHTML = "Guesses Left: " + guessesLeft;
 
         } else {
-            compWord.innerHTML = "You need to press space to start."
+            compWord.innerHTML = "press space to start."
         }
 
     }
@@ -85,29 +94,42 @@ document.onkeyup = function(event) {
                     if (userGuess === choiceArr[i]) {
                         userLtrs[i] = userGuess
                             compWord.innerHTML = userLtrs.join("")
-                    }   
+                }   
             } 
-        } else {
-            console.log("this word is not in array")
-                wrongLtrs.push(userGuess);
-                    document.getElementById("usedletter").innerHTML = wrongLtrs.join("")
-    }
-       
-}
+        } 
 
+        // Wrong guesses decrement
+        if ((correctGuess !== true) && (userGuess1 !== 32) && (shadow === true)) {
+            console.log("this letter is wrong")
+            guessesLeft--
+            remguess.innerHTML = guessesLeft
+        } 
 
-
-
+        //Guesses hit 0 
+        if (guessesLeft === 0) {
+            console.log("you lose!");
+            compWord.innerHTML = choice;
+            gameOver = true;
+        } 
 
         
-        /* gameStart() */
+        win = userLtrs.join("")
 
-     /*    if(choiceString.indexOf(userGuess) === -1) {
-            test = wrongLtrs.push(userGuess)
-            console.log(test) */
-    
+        if (win === choice) {
+            console.log("WINNER WINNER CHICKEN DINNER")
+            gameOver = true;
+        } else {
+            return
+        }
+        
+        
+        //User win
+        
+        
+
+    } // This is the end of gameOver !== true
 
 
 
 
-};
+}; // This is the end of onkeyup
