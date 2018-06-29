@@ -16,14 +16,14 @@ var guessesLeft = 13;
 var gameOver = true;
 
 //Arrays
-var wrongLtrs = []; // userd
+var wrongLtrs = []; // used
 var choiceArr = []; // used
 var userLtrs = []; //used 
 
 
 
 //Word Banks - 23 words + Alphabet
-var wordBank = "avocado asparagus beans broccoli carrot celery cucumber garlic greenbean lettuce  onion pepper peanut potato pumpkin radish salad spinach squash tomato yam zucchini";
+var wordBank = "avocado asparagus beans broccoli carrot celery cucumber garlic greenbean lettuce onion pepper peanut potato pumpkin radish salad spinach squash tomato yam zucchini";
 var alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 //Splits word banks into new arrays
@@ -31,8 +31,8 @@ var wordArray = wordBank.split(" ");
 var alphaArray = alphabet.split("");
 
 
-// Attempts to find x inside of y - returns boolean
-function keyShadow (x, y) {
+//keyShadow attempts to find x inside of y - returns boolean
+function indexOf (x, y) {
     return y.indexOf(x) > -1
 }
 
@@ -48,12 +48,8 @@ function keyShadow (x, y) {
     }
 
         document.getElementById("compword").innerHTML = userLtrs.join("")
+        
 }
-
-
-
-
-// Win check function
 
 
 // --------------------------------------------------------------------------------------------
@@ -63,12 +59,14 @@ document.onkeyup = function(event) {
     userGuess1 = event.keyCode
     console.log(userGuess, userGuess1);
     compWord = document.getElementById("compword");
-    shadow = keyShadow(userGuess, alphaArray);
-    correctGuess = keyShadow(userGuess, choiceArr);
+    userGuessInAlpha = indexOf(userGuess, alphaArray);
+    correctGuess = indexOf(userGuess, choiceArr);
     remguess = document.getElementById("remguess");
+    wrongltr = document.getElementById("usedletter");
+    win = userLtrs.join("")
 
-    
-
+        // Win condition
+ 
     if (gameOver) {
         guessesLeft = 13;
         userLtrs = []
@@ -81,53 +79,46 @@ document.onkeyup = function(event) {
         } else {
             compWord.innerHTML = "press space to start."
         }
-
     }
 
     if (gameOver !== true) {
        
         if (correctGuess) {
-
             console.log("this is a correct guess")
 
-                for (i=0; i < choiceArr.length; i++){
-                    if (userGuess === choiceArr[i]) {
-                        userLtrs[i] = userGuess
-                            compWord.innerHTML = userLtrs.join("")
+            //Will replace underscore with correct letters
+            for (i=0; i < choiceArr.length; i++){
+                if (userGuess === choiceArr[i]) {
+                userLtrs[i] = userGuess
+                compWord.innerHTML = userLtrs.join("")
                 }   
             } 
-        } 
+            //If guess is not correct, and is an A-Z letter, store in wrongLtrs array
+            } else if ((userGuessInAlpha) && (correctGuess !== true) && (userGuess !== false)) {
+                wrongLtrs.push(userGuess)
+                wrongltr.innerHTML = wrongLtrs
+                console.log("this letter is wrong");
+                guessesLeft--;
+                remguess.innerHTML = "Guesses: " + guessesLeft;
+            }
+  
+
+            
+            
+
+            if (win === choice) {
+                remguess.innerHTML = "WINNER WINNER CHICKEN DINNER"
+             } else {
+                console.log()
+             }
+
+
+            
+    } 
 
         // Wrong guesses decrement
-        if ((correctGuess !== true) && (userGuess1 !== 32) && (shadow === true)) {
-            console.log("this letter is wrong")
-            guessesLeft--
-            remguess.innerHTML = guessesLeft
-        } 
-
-        //Guesses hit 0 
-        if (guessesLeft === 0) {
-            console.log("you lose!");
-            compWord.innerHTML = choice;
-            gameOver = true;
-        } 
-
-        
-        win = userLtrs.join("")
-
-        if (win === choice) {
-            console.log("WINNER WINNER CHICKEN DINNER")
-            gameOver = true;
-        } else {
-            return
-        }
-        
-        
-        //User win
-        
         
 
-    } // This is the end of gameOver !== true
 
 
 
