@@ -67,6 +67,12 @@ function lossCheck () {
     }
 }
 
+function image(x) {
+    var myImage = new Image(250, 250);
+    myImage.src = x;
+    document.body.appendChild(myImage);
+}
+
 function winCheck() {
     check = indexOf(" _ ", userLtrs)
     if (check !== true) {
@@ -77,6 +83,7 @@ function winCheck() {
         document.getElementById("usedletter").innerHTML = wrongLtrs;
         document.getElementById("score").innerHTML = score;
 
+        //Pictures associated with word
         if (choice === "avocado") {
             image('../Word-Guess-Game/assets/images/avocado.jpg')
         } else if (choice === "asparagus") {
@@ -126,11 +133,7 @@ function winCheck() {
     
 }
 
-function image(x) {
-    var myImage = new Image(250, 250);
-    myImage.src = x;
-    document.body.appendChild(myImage);
-}
+
     
     
 
