@@ -5,6 +5,8 @@
 // Music 
 // 
 
+
+
 //Globals
 
 var i;
@@ -75,7 +77,7 @@ function lossCheck () {
 function image(x) {
     var myImage = new Image(250, 250);
     myImage.src = x;
-    document.body.appendChild(myImage);
+    document.getElementById("image").appendChild(myImage);
 }
 
 // Check for Win
@@ -163,7 +165,6 @@ document.onkeyup = function(event) {
     if (gameOver) {
         guessesLeft = 13;
         userLtrs = [];
-        
 
         //User presses 'space' to start the game.
         if (userGuess1 === 32) {
@@ -176,9 +177,9 @@ document.onkeyup = function(event) {
         }
     }
 
+
     if (gameOver !== true) {
         if (correctGuess) {
-            console.log("this is a correct guess")
             //Will replace underscore with correct letters
             for (i=0; i < choiceArr.length; i++){
                 if (userGuess === choiceArr[i]) {
@@ -190,7 +191,6 @@ document.onkeyup = function(event) {
         } else if ((userGuessInAlpha) && (correctGuess !== true) && (userGuess !== false) && (indexOf(userGuess, wrongLtrs) === false))  {
             wrongLtrs.push(userGuess)
             wrongltr.innerHTML = wrongLtrs
-            console.log("this letter is wrong");
             guessesLeft--;
             remguess.innerHTML = "Guesses: " + guessesLeft;
         }
