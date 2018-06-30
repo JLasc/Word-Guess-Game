@@ -14,15 +14,14 @@ var losses = 0;
 var guessesLeft = 13;
 var gameOver = true;
 
-
-
 //Arrays
 var wrongLtrs = []; // used
 var choiceArr = []; // used
 var userLtrs = []; //used 
 
-//Image variables
-
+//Sound variables
+var winAudio = new Audio('../Word-Guess-Game/assets/audio/win.mp3')
+var loseAudio = new Audio('../Word-Guess-Game/assets/audio/lose.mp3')
 
 //Word Banks - 22 words + Alphabet
 var wordBank = "avocado asparagus beans broccoli carrot celery cucumber garlic greenbean lettuce onion pepper peanut potato pumpkin radish salad spinach squash tomato yam zucchini";
@@ -32,14 +31,15 @@ var alphabet = "abcdefghijklmnopqrstuvwxyz";
 var wordArray = wordBank.split(" ");
 var alphaArray = alphabet.split("");
 
+//Scoreboard
 var score = 
 "<p>Wins: " + wins +  "</p>" +
 "<p>Losses: " + losses + "</p>"
 
 
-//keyShadow attempts to find x inside of y - returns boolean
+// attempts to find x inside of y - returns boolean
 function indexOf (x, y) {
-    return y.indexOf(x) > -1
+    return y.indexOf(x) > -1 // true or false
 }
 
 //Function that starts the game.
@@ -47,17 +47,21 @@ function gameStart () {
     compWord = document.getElementById("compword");
     choice = wordArray[Math.floor(Math.random() * wordArray.length)];
     choiceArr = choice.split("");
-    for (i=0; i < choiceArr.length; i++) {
-        userLtrs.push(" _ ")
-    }
+
+        for (i=0; i < choiceArr.length; i++) {
+            userLtrs.push(" _ ")
+        }
+
     document.getElementById("compword").innerHTML = userLtrs.join("")
     document.getElementById("score").innerHTML = score;
 }
 
+//Check if lost
 function lossCheck () {
     if (guessesLeft === 0) {
         gameOver = true;
         wrongLtrs = [];
+        loseAudio.play()
         losses++;
         document.getElementById("remguess").innerHTML = "You Lost!";
         document.getElementById("compword").innerHTML =  choice;
@@ -67,18 +71,21 @@ function lossCheck () {
     }
 }
 
+//Attach image function
 function image(x) {
     var myImage = new Image(250, 250);
     myImage.src = x;
     document.body.appendChild(myImage);
 }
 
+// Check for Win
 function winCheck() {
     check = indexOf(" _ ", userLtrs)
     if (check !== true) {
         wrongLtrs = [];
         gameOver = true;
         wins++
+        winAudio.play()
         document.getElementById("remguess").innerHTML = "You won!"
         document.getElementById("usedletter").innerHTML = wrongLtrs;
         document.getElementById("score").innerHTML = score;
@@ -144,13 +151,14 @@ function winCheck() {
 document.onkeyup = function(event) {
     userGuess = event.key
     userGuess1 = event.keyCode
-    console.log(userGuess, userGuess1);
-    compWord = document.getElementById("compword");
+    win = userLtrs.join("")
+    
     userGuessInAlpha = indexOf(userGuess, alphaArray);
     correctGuess = indexOf(userGuess, choiceArr);
+
+    compWord = document.getElementById("compword");
     remguess = document.getElementById("remguess");
     wrongltr = document.getElementById("usedletter");
-    win = userLtrs.join("")
 
     if (gameOver) {
         guessesLeft = 13;
