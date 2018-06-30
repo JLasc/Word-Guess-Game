@@ -55,7 +55,8 @@ function gameStart () {
         }
 
     document.getElementById("compword").innerHTML = userLtrs.join("")
-    document.getElementById("score").innerHTML = score;
+    document.getElementById("score").innerHTML = score
+    
 }
 
 //Check if lost
@@ -63,12 +64,11 @@ function lossCheck () {
     if (guessesLeft === 0) {
         gameOver = true;
         wrongLtrs = [];
-        loseAudio.play()
-        losses++;
+        losses++
         document.getElementById("remguess").innerHTML = "You Lost!";
         document.getElementById("compword").innerHTML =  choice;
         document.getElementById("usedletter").innerHTML = wrongLtrs;
-        document.getElementById("score").innerHTML = score;
+        loseAudio.play()
 
     }
 }
@@ -78,6 +78,7 @@ function image(x) {
     var myImage = new Image(250, 250);
     myImage.src = x;
     document.getElementById("image").appendChild(myImage);
+   
 }
 
 // Check for Win
@@ -85,14 +86,14 @@ function winCheck() {
     check = indexOf(" _ ", userLtrs)
     if (check !== true) {
         wrongLtrs = [];
+        wins++;
         gameOver = true;
-        wins++
-        winAudio.play()
-        document.getElementById("remguess").innerHTML = "You won!"
+        document.getElementById("remguess").innerHTML = "You won!";
         document.getElementById("usedletter").innerHTML = wrongLtrs;
-        document.getElementById("score").innerHTML = score;
-
+        winAudio.play()
+   
         //Pictures associated with word
+        document.getElementById("image").innerHTML = " "
         if (choice === "avocado") {
             image('../Word-Guess-Game/assets/images/avocado.jpg')
         } else if (choice === "asparagus") {
@@ -125,7 +126,9 @@ function winCheck() {
             image('../Word-Guess-Game/assets/images/pumpkin.jpg')
         } else if (choice === "radish") {
             image('../Word-Guess-Game/assets/images/radish.jpg')
-        } else if (choice === "salad") {
+        } else if (choice === "salad") { 
+            image('../Word-Guess-Game/assets/images/salad.jpg')
+        } else if (choice === "spinach") { 
             image('../Word-Guess-Game/assets/images/spinach.jpg')
         } else if (choice === "squash") {
             image('../Word-Guess-Game/assets/images/squash.jpg')
@@ -143,10 +146,6 @@ function winCheck() {
 }
 
 
-    
-    
-
-
 
 // --------------------------------------------------------------------------------------------
 //Key Up interactions
@@ -162,10 +161,10 @@ document.onkeyup = function(event) {
     remguess = document.getElementById("remguess");
     wrongltr = document.getElementById("usedletter");
 
+
     if (gameOver) {
         guessesLeft = 13;
         userLtrs = [];
-
         //User presses 'space' to start the game.
         if (userGuess1 === 32) {
             gameStart();
@@ -196,11 +195,13 @@ document.onkeyup = function(event) {
         }
         lossCheck()
         winCheck()
+    
     } 
 
-   
-//Scoreboard
-score
+    score = 
+"<p>Wins: " + wins +  "</p>" +
+"<p>Losses: " + losses + "</p>"
+
 
 
 }; // This is the end of onkeyup
