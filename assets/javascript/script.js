@@ -1,11 +1,3 @@
-// Add a function that checks the winning condition 
-// Limit wrong guesses and decrement
-// link remaining guesses to #remguess
-// Add images - shorten word bank
-// Music 
-// 
-
-
 
 //Globals
 
@@ -17,9 +9,9 @@ var guessesLeft = 13;
 var gameOver = true;
 
 //Arrays
-var wrongLtrs = []; // used
-var choiceArr = []; // used
-var userLtrs = []; //used 
+var wrongLtrs = []; 
+var choiceArr = []; 
+var userLtrs = []; 
 
 //Sound variables
 var winAudio = new Audio('../Word-Guess-Game/assets/audio/win.mp3')
@@ -198,10 +190,10 @@ document.onkeyup = function(event) {
     
     } 
 
+
+
     score = 
 "<p>Wins: " + wins +  "</p>" +
 "<p>Losses: " + losses + "</p>"
-
-
 
 }; // This is the end of onkeyup
