@@ -1,6 +1,5 @@
 
 //Globals
-
 var i;
 var choice;
 var wins = 0;
@@ -137,23 +136,21 @@ function winCheck() {
     
 }
 
-
-
-// --------------------------------------------------------------------------------------------
 //Key Up interactions
 document.onkeyup = function(event) {
-    userGuess = event.key
-    userGuess1 = event.keyCode
-    win = userLtrs.join("")
+    userGuess = event.key;
+    userGuess1 = event.keyCode;
+    win = userLtrs.join("");
     
     userGuessInAlpha = indexOf(userGuess, alphaArray);
     correctGuess = indexOf(userGuess, choiceArr);
+    sameLetter = indexOf(userGuess, wrongLtrs);
 
     compWord = document.getElementById("compword");
     remguess = document.getElementById("remguess");
     wrongltr = document.getElementById("usedletter");
 
-
+    //If gameover is true, reset and press space to choose new word
     if (gameOver) {
         guessesLeft = 13;
         userLtrs = [];
@@ -168,7 +165,7 @@ document.onkeyup = function(event) {
         }
     }
 
-
+    //
     if (gameOver !== true) {
         if (correctGuess) {
             //Will replace underscore with correct letters
@@ -177,23 +174,23 @@ document.onkeyup = function(event) {
                 userLtrs[i] = userGuess
                 compWord.innerHTML = userLtrs.join("")
                 }   
-            } 
+            };
         //If guess is not correct, and is an A-Z letter, store in wrongLtrs array
-        } else if ((userGuessInAlpha) && (correctGuess !== true) && (userGuess !== false) && (indexOf(userGuess, wrongLtrs) === false))  {
+        } else if ((userGuessInAlpha) && (correctGuess !== true) && (userGuess !== false) && (sameLetter === false))  {
             wrongLtrs.push(userGuess)
             wrongltr.innerHTML = wrongLtrs
             guessesLeft--;
             remguess.innerHTML = "Guesses: " + guessesLeft;
-        }
-        lossCheck()
-        winCheck()
+        };
+        lossCheck();
+        winCheck();
     
-    } 
+    }; 
 
 
 
     score = 
-"<p>Wins: " + wins +  "</p>" +
-"<p>Losses: " + losses + "</p>"
+    "<p>Wins: " + wins +  "</p>" +
+    "<p>Losses: " + losses + "</p>";
 
 }; // This is the end of onkeyup
